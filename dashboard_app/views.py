@@ -6,7 +6,54 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+import csv
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Projeto, Dados, CustomUser
+import datetime
 
+@csrf_exempt  # Idealmente, utilize um mecanismo de proteção CSRF apropriado
+@login_required  # Garante que o usuário esteja autenticado
+def upload_csv(request):
+    if request.method == 'POST':
+        csv_file = request.FILES['file']
+        decoded_file = csv_file.read().decode('utf-8').splitlines()
+        reader = csv.DictReader(decoded_file)
+
+        # Criando um novo projeto
+        projeto = Projeto.objects.create(
+            nome='Projeto ' + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            descricao='Projeto criado a partir do upload CSV em ' + datetime.datetime.now().strftime("%Y-%m-%d"),
+        )
+
+        # Associar o usuário autenticado ao projeto
+        if request.user.is_authenticated:
+            projeto.usuarios.add(request.user)
+
+        # Processando as linhas do CSV e criando objetos Dados
+        for row in reader:
+            Dados.objects.create(
+                projeto=projeto,
+                date=row['Date'] if row['Date'] else '',
+                time=row['Time'] if row['Time'] else '',
+                time_seconds=row['Time Seconds'] if row['Time Seconds'] else '',
+                billable=row['Billable'] if row['Billable'] else '',
+                member=row['Member'] if row['Member'] else '',
+                board=row['Board'] if row['Board'] else '',
+                card=row['Card'] if row['Card'] else '',
+                card_labels=row['Card labels'] if row['Card labels'] else '',
+                estimate=row['Estimate'] if row['Estimate'] else '',
+                estimate_seconds=row['Estimate Seconds'] if row['Estimate Seconds'] else '',
+                list=row['List'] if row['List'] else '',
+                comment=row['Comment'] if row['Comment'] else '',
+                billable_time=row['Billable time'] if row['Billable time'] else '',
+                billable_amount=row['Billable amount'] if row['Billable amount'] else '',
+                non_billable_time=row['Non-billable time'] if row['Non-billable time'] else '',
+            )
+
+        return JsonResponse({'status': 'success'})
+
+    return JsonResponse({'status': 'invalid request'}, status=400)
 
 def login_view(request):
     print("A view de login foi chamada")

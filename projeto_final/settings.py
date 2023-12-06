@@ -34,7 +34,7 @@ SECRET_KEY = 'lj80$(=4+y#liv)$xh(j-c(9j(oizu(z&c95)l-_m10wlg-0sv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 

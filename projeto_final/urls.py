@@ -36,4 +36,5 @@ urlpatterns = [
     path('utilities-color/', views.utilities_color_view, name='utilities_color'),
     path('utilities-other/', views.utilities_other_view, name='utilities_other'),
     path('logout/', views.logout_view, name='logout'),
+    path('upload-csv/', views.upload_csv, name='upload_csv'),
 ]

@@ -54,3 +54,40 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
+class Departamento(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField()
+
+    def __str__(self):
+        return self.nome
+
+class Projeto(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField()
+    usuarios = models.ManyToManyField(CustomUser)
+    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.nome
+
+
+class Dados(models.Model):
+    projeto = models.ForeignKey(Projeto, on_delete=models.CASCADE)
+    date = models.CharField(max_length=20)  # Mudança para CharField
+    time = models.CharField(max_length=20)
+    time_seconds = models.CharField(max_length=20)
+    billable = models.CharField(max_length=20)
+    member = models.CharField(max_length=100)
+    board = models.CharField(max_length=100)
+    card = models.CharField(max_length=100)
+    card_labels = models.CharField(max_length=200)
+    estimate = models.CharField(max_length=20)
+    estimate_seconds = models.CharField(max_length=10)
+    list = models.CharField(max_length=100)
+    comment = models.TextField(blank=True)
+    billable_time = models.CharField(max_length=20)
+    billable_amount = models.CharField(max_length=20)
+    non_billable_time = models.CharField(max_length=20)
+
+
+
