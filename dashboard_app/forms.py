@@ -2,6 +2,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import CustomUser
 
+from .models import Departamento
+
+class DepartamentoForm(forms.ModelForm):
+    class Meta:
+        model = Departamento
+        fields = ['nome', 'descricao']
+
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
 

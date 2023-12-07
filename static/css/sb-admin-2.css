@@ -10861,13 +10861,13 @@ a:focus {
 }
 
 .bg-login-image {
-  background-image: url('../img/pawel-czerwinski-oykbZuvajO0-unsplash.jpg');
+  background-image: url('/static/img/pawel-czerwinski-oykbZuvajO0-unsplash.jpg');
   background-position: center;
   background-size: cover;
 }
 
 .bg-register-image {
-  background: url('img/pawel-czerwinski-oykbZuvajO0-unsplash.jpg');
+  background: url('/static/img/pawel-czerwinski-oykbZuvajO0-unsplash.jpg');
   background-position: center;
   background-size: cover;
 }

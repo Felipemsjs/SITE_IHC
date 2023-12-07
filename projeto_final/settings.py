@@ -20,7 +20,12 @@ LOGIN_REDIRECT_URL = 'login'
 # Certifique-se de ter esta linha com o seu CustomUser definido
 AUTH_USER_MODEL = 'dashboard_app.CustomUser'  
 
+CSRF_TRUSTED_ORIGINS = ['https://34fd-177-72-25-44.ngrok-free.app']
+SESSION_COOKIE_SECURE = True  # Transmite o cookie apenas sobre HTTPS
+CSRF_COOKIE_SECURE = True     # Transmite o cookie CSRF apenas sobre HTTPS
 
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

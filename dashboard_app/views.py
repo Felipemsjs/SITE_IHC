@@ -11,6 +11,17 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import Projeto, Dados, CustomUser
 import datetime
+from .forms import DepartamentoForm
+
+def departamento_create_view(request):
+    if request.method == 'POST':
+        form = DepartamentoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cadastrar_departamento')  # Redirecionar para onde você quiser após o cadastro
+    else:
+        form = DepartamentoForm()
+    return render(request, 'departamento.html', {'form': form})
 
 @csrf_exempt  # Idealmente, utilize um mecanismo de proteção CSRF apropriado
 @login_required  # Garante que o usuário esteja autenticado
@@ -90,6 +101,9 @@ def register(request):
         form = CustomUserCreationForm()
 
     return render(request, 'register.html', {'form': form})
+
+def departamento_view(request):
+    return render(request, 'departamento.html')
 
 def logout_view(request):
     logout(request)

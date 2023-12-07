@@ -13,9 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from dashboard_app import views
+from django.conf import settings
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -37,4 +40,6 @@ urlpatterns = [
     path('utilities-other/', views.utilities_other_view, name='utilities_other'),
     path('logout/', views.logout_view, name='logout'),
     path('upload-csv/', views.upload_csv, name='upload_csv'),
-]
+    path('departamento/', views.departamento_view, name='departamento'),
+    path('departamento/cadastrar/', views.departamento_create_view, name='cadastrar_departamento'),
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

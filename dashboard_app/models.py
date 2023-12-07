@@ -16,8 +16,7 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError(_('The Email field must be set'))
         email = self.normalize_email(email)
-        username = extra_fields.get('username', get_random_string(8))  # Gera um username aleatório se não for fornecido
-        user = self.model(email=email, username=username, **extra_fields)
+        user = self.model(email=email, username=email, **extra_fields)  # O email é usado como username
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -36,8 +35,6 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-
-
 class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
 
@@ -47,8 +44,7 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def save(self, *args, **kwargs):
-        if not self.username:
-            self.username = uuid.uuid4().hex[:30]  # Gera um UUID como username
+        self.username = self.email  # Garantir que o username sempre seja o email
         super().save(*args, **kwargs)
 
     def __str__(self):

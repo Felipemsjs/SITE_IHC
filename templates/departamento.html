@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     {% load static %}
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>Departamento</title>
 
     <!-- Custom fonts for this template-->
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -30,26 +29,28 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Crie sua conta!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Crie um departamento!</h1>
                             </div>
-                            <form class="user" method="POST" action="{% url 'register' %}">
+                            <!-- Dentro do seu template HTML -->
+                            <form class="user" method="POST" action="{% url 'cadastrar_departamento' %}">
                                 {% csrf_token %}
-                                {{ form.as_p }}
+                               
+                                
+                                <div class="form-group">
+                                    Departamento: {{ form.nome }}
+                                </div>
+                                <div class="form-group">
+                                    Descrição: {{ form.descricao }}
+                                </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Registrar conta!
+                                    Cadastrar Departamento
                                 </button>
-                                <hr>
-                                {% if messages %}
-                                    <ul class="messages">
-                                        {% for message in messages %}
-                                            <li class="{{ message.tags }}">{{ message }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
+                                <!-- Outros elementos do formulário -->
                             </form>
+
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="{% url 'login' %}">Já tem uma conta? Login!</a>
+                                <a class="small" href="{% url 'index' %}">Voltar!</a>
                             </div>
                         </div>
                     </div>
